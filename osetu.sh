@@ -1,7 +1,12 @@
 #!/bin/bash
 
+sudo adduser nate
+sudo usermod -aG sudo nate
+groups nate
+
+ 
 # Environment Variables
-export HOME=/nate
+export HOME=/home/nate
 export TOOLS="/opt/toolZ"
 export ADDONS="/opt/addons"
 export WORDLISTS="/opt/wordlists"
@@ -30,11 +35,11 @@ apt-get update && \
   libgmp-dev \
   libpcap-dev \
   make \
-#  nano \
+  micro \
   netcat \
   net-tools \
-#  nodejs \
-#  npm \
+  nodejs \
+  npm \
   perl \
   php \
   proxychains \
