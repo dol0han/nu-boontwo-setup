@@ -1,4 +1,4 @@
-
+#!/usr/bin/zsh
 # codenoid
 # https://gist.github.com/codenoid/4806365032bb4ed62f381d8a76ddb8e6
 printf "Checking latest Go version...\n";
