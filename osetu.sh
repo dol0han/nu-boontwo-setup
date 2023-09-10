@@ -10,10 +10,6 @@ export HOME=/home/nate
 export TOOLS="/opt/toolZ"
 export ADDONS="/opt/addons"
 export WORDLISTS="/opt/wordlists"
-# export GO111MODULE=on
-# export GOROOT=$HOME/go
-# export GOPATH=$HOME/go
-# export PATH=${HOME}/:${GOPATH}/bin:${GOROOT}/bin:${PATH}
 export DEBIAN_FRONTEND=noninteractive
 
 # Create working dirs
@@ -86,7 +82,6 @@ apt-get update && \
   libxslt1-dev \
   ruby-dev \
   zlib1g-dev \
-  zsh
   fonts-powerline \
   powerline && \
   echo "Placeholder"
@@ -106,20 +101,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 # amass
 go install -v github.com/owasp-amass/amass/v3/...@master
-
-# cloudfail - not working with latest python3
-
-# git clone --depth 1 https://github.com/m0rtem/CloudFail.git $TOOLS/cloudfail && \
-
-#   cd $TOOLS/cloudfail && \
-
-#   python3 -m pip install -r requirements.txt && \
-
-#   sed -i 's^#!/usr/bin/env python3^#!/usr/bin/python3^g' cloudfail.py && \
-
-#   chmod a+x cloudfail.py && \
-
-#   ln -sf $TOOLS/cloudfail/cloudfail.py /usr/local/bin/cloudfail
 
 # breach-parse
 git clone --depth 1 https://github.com/hmaverickadams/breach-parse.git $TOOLS/breach-parse && \
@@ -194,12 +175,6 @@ git clone --depth 1 https://github.com/codingo/Interlace.git $TOOLS/interlace &&
   chmod a+x Interlace/interlace.py && \
   ln -sf $TOOLS/interlace/Interlace/interlace.py /usr/local/bin/interlace
 
-# john the ripper
-git clone --depth 1 https://github.com/magnumripper/JohnTheRipper $TOOLS/john && \
-  cd $TOOLS/john/src && \
-  echo "alias john='${TOOLS}/john/run/john'" >> ~/.zshrc && \
-  ./configure && make -s clean && make -sj4
-
 # jwttool
 git clone --depth 1 https://github.com/ticarpi/jwt_tool $TOOLS/jwttool && \
   cd $TOOLS/jwttool && \
@@ -224,13 +199,6 @@ git clone --depth 1 https://github.com/robertdavidgraham/masscan.git $TOOLS/mass
 
 # meg
 go install -v github.com/tomnomnom/meg@latest
-
-# metasploit
-mkdir $TOOLS/metasploit && \
-  cd $TOOLS/metasploit && \
-  curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && \
-  chmod 755 msfinstall && \
-  ./msfinstall
 
 # nuclei
 go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest && \
