@@ -10,10 +10,10 @@ export HOME=/home/nate
 export TOOLS="/opt/toolZ"
 export ADDONS="/opt/addons"
 export WORDLISTS="/opt/wordlists"
-export GO111MODULE=on
-export GOROOT=/usr/local/go
-export GOPATH=/go
-export PATH=${HOME}/:${GOPATH}/bin:${GOROOT}/bin:${PATH}
+# export GO111MODULE=on
+# export GOROOT=$HOME/go
+# export GOPATH=$HOME/go
+# export PATH=${HOME}/:${GOPATH}/bin:${GOROOT}/bin:${PATH}
 export DEBIAN_FRONTEND=noninteractive
 
 # Create working dirs
@@ -86,21 +86,21 @@ apt-get update && \
   libxslt1-dev \
   ruby-dev \
   zlib1g-dev \
-  # zsh
+  zsh
   fonts-powerline \
   powerline && \
   echo "Placeholder"
 
 # Install go
-# wget https://github.com/kerolloz/go-installer/blob/master/go.sh || sudo sh go.sh 
-echo "export PATH=$PATH:/usr/local/go/bin" >> {~/.zshrc,~/.bashrc}
+wget https://git.io/go-installer.sh && bash go-installer.sh
 
 # Install Python common dependencies
 python3 -m pip install --upgrade setuptools wheel paramiko
 
 # Install ZSH
-# sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended \
-#  && echo "Placeholder"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended \
+ && echo "Placeholder"
+# ZSH config
 
 # --- Tools ---
 
@@ -150,7 +150,16 @@ git clone --depth 1 https://github.com/Mebus/cupp.git $TOOLS/cupp && \
 
 # dalfox
 git clone --depth 1 https://github.com/hahwul/dalfox.git $TOOLS/dalfox && \
-  cd $TOOLS/dalfox && \
+  cd $TOOLS
+
+    IP space discovery
+    TLDs, Acquisitions, & Relations
+    Subdomain Enum
+    Fingerpirnting
+    Dorking
+    Content Discovery
+    Parameter Discovery
+/dalfox && \
   go install
 
 # dnmasscan
@@ -342,25 +351,11 @@ git clone --depth 1 https://gitlab.com/kalilinux/packages/webshells.git /usr/sha
 
 # --- Config ---
 
-# Set timezone
-ln -fs /usr/share/zoneinfo/Australia/Brisbane /etc/localtime && \
-  dpkg-reconfigure --frontend noninteractive tzdata
-
 # Easier to access list of nmap scripts
 ln -s /usr/share/nmap/scripts/ $ADDONS/nmap
 
-# Proxychains config
-echo "dynamic_chain" > /etc/proxychains.conf && \
-  echo "proxy_dns" >> /etc/proxychains.conf && \
-  echo "tcp_read_time_out 15000" >> /etc/proxychains.conf && \
-  echo "tcp_connect_time_out 8000" >> /etc/proxychains.conf && \
-  echo "[ProxyList]" >> /etc/proxychains.conf && \
-  echo "socks5 127.0.0.1 9050" >> /etc/proxychains.conf
-
 # Common commands (aliases)
 echo "alias myip='dig +short myip.opendns.com @resolver1.opendns.com'" >> ~/.zshrc
-
-# ZSH config
 
 
 # --- Finished ---
