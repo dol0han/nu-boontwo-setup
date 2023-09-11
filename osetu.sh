@@ -296,7 +296,7 @@ git clone --depth 1 https://github.com/s0md3v/XSStrike.git $TOOLS/xsstrike && \
   python3 -m pip install -r requirements.txt && \
   chmod a+x xsstrike.py && \
   ln -sf $TOOLS/xsstrike/xsstrike.py /usr/local/bin/xsstrike
-
+/etc/apt/sources.list.d/shells:zsh-users:zsh-autosuggestions.list
 # --- Wordlists ---
 
 # seclists
