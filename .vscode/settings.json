@@ -1,0 +1,7 @@
+{
+    "editor.fontFamily": "'Hack Nerd Font'",
+    "files.autoSave": "afterDelay",
+    "editor.fontSize": 16,
+    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.wordWrap": "on"
+}

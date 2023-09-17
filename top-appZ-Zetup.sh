@@ -1,12 +1,7 @@
 #!/bin/bash
-
-sudo adduser nate
-sudo usermod -aG sudo nate
-groups nate
-
  
 # Environment Variables
-export HOME=/home/nate
+export HOME=/home/dolohan
 export TOOLS="/opt/toolZ"
 export ADDONS="/opt/addons"
 export WORDLISTS="/opt/wordlists"
@@ -20,7 +15,7 @@ mkdir $WORDLISTS && mkdir $ADDONS
 apt-get update && \
   apt-get install -y --no-install-recommends --fix-missing \
   apt-utils \
-#  awscli \
+  awscli \
   build-essential \
   curl \
   dnsutils \
@@ -65,17 +60,13 @@ apt-get update && \
   nmap \
   smbclient \
   sqlmap \
-  # johntheripper
   libssl-dev \
   yasm \
   pkg-config \
   libbz2-dev \
-  # Metasploit
   gnupg2 \
-  # OpenVPN
   openvpn \
   easy-rsa \
-  # wpscan
   libcurl4-openssl-dev \
   libxml2 \
   libxml2-dev \
@@ -92,22 +83,21 @@ wget https://git.io/go-installer.sh && bash go-installer.sh
 # Install Python common dependencies
 python3 -m pip install --upgrade setuptools wheel paramiko
 
-# Install ZSH
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended \
- && echo "Placeholder"
-# ZSH config
-# ZSH SYNTAX HIGHLIGHTING
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
-echo "source ${(q-)PWD}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
-# zsh auto-suggestions
-echo 'deb http://download.opensuse.org/repositories/shells:/zsh-users:/zsh-autosuggestions/xUbuntu_22.04/ /' | sudo tee /etc/apt/sources.list.d/shells:zsh-users:zsh-autosuggestions.list
-curl -fsSL https://download.opensuse.org/repositories/shells:zsh-users:zsh-autosuggestions/xUbuntu_22.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_zsh-users_zsh-autosuggestions.gpg > /dev/null
-sudo apt update
-sudo apt install zsh-autosuggestions
-# --- Tools ---
+# Install ohmyZSH
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sed 's:env zsh::g' | sed 's:chsh -s .*$::g')"# ZSH config
+mv ~/.zshrc ~/.default-omz-zshrc && \
+curl -o ~/.zshrc "https://github.com/dol0han/nu-boontwo-setup/blob/a/.zshrc"
+#install syntaxhighlighting & autosuggestionz and edit zshrc if needed
+cd ~/.oh-my-zsh/custom/plugins
+git clone https://github.com/zsh-users/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting
+cd ~/
+# install spaceship zsh prompt
+git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1
+# symlink it now
+ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
 
-# amass
-go install -v github.com/owasp-amass/amass/v3/...@master
+# --- Tools ---
 
 # breach-parse
 git clone --depth 1 https://github.com/hmaverickadams/breach-parse.git $TOOLS/breach-parse && \
@@ -156,23 +146,10 @@ git clone --depth 1 https://github.com/rastating/dnmasscan.git $TOOLS/dnmasscan 
   chmod a+x dnmasscan && \
   ln -sf $TOOLS/dnmasscan/dnmasscan /usr/local/bin/dnmasscan
 
-# dnsprobe
-go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest
-
 # exploitdb (searchsploit)
 git clone --depth 1 https://github.com/offensive-security/exploitdb.git $TOOLS/exploitdb && \
   cd $TOOLS/exploitdb && \
   ln -sf $TOOLS/exploitdb/searchsploit /usr/bin/searchsploit
-
-# fuff
-go install github.com/ffuf/ffuf@latest
-
-# gau
-go install github.com/lc/gau/v2/cmd/gau@latest && \
-  echo "alias gau='/go/bin/gau'" >> ~/.zshrc
-
-# httpx
-go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 
 # interlace
 git clone --depth 1 https://github.com/codingo/Interlace.git $TOOLS/interlace && \
@@ -203,9 +180,6 @@ git clone --depth 1 https://github.com/robertdavidgraham/masscan.git $TOOLS/mass
   cd $TOOLS/masscan && \
   make -j && \
   ln -sf $TOOLS/masscan/bin/masscan /usr/local/bin/masscan
-
-# meg
-go install -v github.com/tomnomnom/meg@latest
 
 # nuclei
 go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest && \
@@ -240,15 +214,6 @@ git clone --depth 1 https://github.com/trustedsec/social-engineer-toolkit $TOOLS
   python3 -m pip install -r requirements.txt || : && \
   python3 setup.py || :
 
-# subfinder
-go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
-
-# subjs
-go install -v github.com/lc/subjs@latest
-
-# subjack
-go install -v github.com/haccer/subjack@latest
-
 # sublist3r
 git clone --depth 1 https://github.com/aboul3la/Sublist3r.git $TOOLS/sublist3r && \
   cd $TOOLS/sublist3r && \
@@ -258,7 +223,6 @@ git clone --depth 1 https://github.com/aboul3la/Sublist3r.git $TOOLS/sublist3r &
   ln -sf $TOOLS/sublist3r/sublist3r.py /usr/local/bin/sublist3r
 
 # theharvester
-
 # Note: it needs to be installed in /etc/ as there are absolute refs in the code
 git clone --depth 1 https://github.com/laramies/theHarvester /etc/theHarvester && \
   cd /etc/theHarvester && \
@@ -268,9 +232,6 @@ git clone --depth 1 https://github.com/laramies/theHarvester /etc/theHarvester &
   chmod a+x theHarvester.py && \
   ln -sf /etc/theHarvester/theHarvester.py /usr/local/bin/theharvester
 
-# unfurl
-go install -v github.com/tomnomnom/unfurl@latest
-
 # wafw00f
 git clone --depth 1 https://github.com/enablesecurity/wafw00f.git $TOOLS/wafw00f && \
   cd $TOOLS/wafw00f && \
@@ -278,8 +239,7 @@ git clone --depth 1 https://github.com/enablesecurity/wafw00f.git $TOOLS/wafw00f
   python3 setup.py install
 
 # wfuzz
-
-# pip install wfuzz
+pip install wfuzz
 
 # whatweb
 git clone --depth 1 https://github.com/urbanadventurer/WhatWeb.git $TOOLS/whatweb && \

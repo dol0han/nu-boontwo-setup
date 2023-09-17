@@ -72,7 +72,7 @@ ZSH_THEME="spaceship"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(zsh-autosuggestions )
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -104,7 +104,5 @@ alias ohmyzsh="mate ~/.oh-my-zsh"
 alias c="clear"
 alias l="ls -lah"
 alias m=/usr/bin/micro
-
-source /home/nate/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # export PATH="/opt/node-v18.17.1-linux-x64/bin":$PATH
