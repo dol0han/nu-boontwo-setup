@@ -18,3 +18,5 @@ git clone --depth 1 https://github.com/hahwul/dalfox.git $TOOLS/dalfox && \
 go install -v github.com/owasp-amass/amass/v3/...@master
 go install github.com/003random/getJS@latest
 go install -v github.com/Azathothas/BugGPT-Tools/scopegen@main
+go install -v github.com/edoardottt/cariddi/cmd/cariddi@latest
+GO111MODULE=on go install github.com/jaeles-project/gospider@latest

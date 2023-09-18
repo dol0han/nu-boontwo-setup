@@ -77,25 +77,24 @@ apt-get update && \
   powerline && \
   echo "Placeholder"
 
+# Install languages eg python go, rust etc
 # Install go
 wget https://git.io/go-installer.sh && bash go-installer.sh
 
 # Install Python common dependencies
 python3 -m pip install --upgrade setuptools wheel paramiko
 
-# Install ohmyZSH
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sed 's:env zsh::g' | sed 's:chsh -s .*$::g')"# ZSH config
-mv ~/.zshrc ~/.default-omz-zshrc && \
-curl -o ~/.zshrc "https://github.com/dol0han/nu-boontwo-setup/blob/a/.zshrc"
-#install syntaxhighlighting & autosuggestionz and edit zshrc if needed
-cd ~/.oh-my-zsh/custom/plugins
-git clone https://github.com/zsh-users/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting
-cd ~/
-# install spaceship zsh prompt
-git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1
-# symlink it now
-ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+# shell and prompt setup
+# Install configured ZSH
+if command -v curl >/dev/null 2>&1; then
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/romkatv/zsh4humans/v5/install)"
+else
+  sh -c "$(wget -O- https://raw.githubusercontent.com/romkatv/zsh4humans/v5/install)"
+fi
+
+#install fig
+curl -fSsL https://repo.fig.io/scripts/install-headless.sh | bash
+echo "REMEMBER to login to fig: fig login"
 
 # --- Tools ---
 
@@ -236,10 +235,7 @@ git clone --depth 1 https://github.com/laramies/theHarvester /etc/theHarvester &
 git clone --depth 1 https://github.com/enablesecurity/wafw00f.git $TOOLS/wafw00f && \
   cd $TOOLS/wafw00f && \
   chmod a+x setup.py && \
-  python3 setup.py install
-
-# wfuzz
-pip install wfuzz
+  python3 setup.py install  
 
 # whatweb
 git clone --depth 1 https://github.com/urbanadventurer/WhatWeb.git $TOOLS/whatweb && \
@@ -257,7 +253,6 @@ git clone --depth 1 https://github.com/s0md3v/XSStrike.git $TOOLS/xsstrike && \
   chmod a+x xsstrike.py && \
   ln -sf $TOOLS/xsstrike/xsstrike.py /usr/local/bin/xsstrike
 /etc/apt/sources.list.d/shells:zsh-users:zsh-autosuggestions.list
-# --- Wordlists ---
 
 # seclists
  git clone --depth 1 https://github.com/danielmiessler/SecLists.git $WORDLISTS/seclists
@@ -272,11 +267,13 @@ ln -sf $( find /go/pkg/mod/github.com/\!o\!w\!a\!s\!p/\!amass -name wordlists ) 
   ln -sf /usr/share/brutespray/wordlist $WORDLISTS/brutespray && \
   ln -sf /usr/share/dirb/wordlists $WORDLISTS/dirb && \
   ln -sf /usr/share/setoolkit/src/fasttrack/wordlist.txt $WORDLISTS/fasttrack.txt && \
-  ln -sf /opt/metasploit-framework/embedded/framework/data/wordlists $WORDLISTS/metasploit && \
+ # ln -sf /opt/metasploit-framework/embedded/framework/data/wordlists $WORDLISTS/metasploit && \
   ln -sf /usr/share/nmap/nselib/data/passwords.lst $WORDLISTS/nmap.lst && \
   ln -sf /etc/theHarvester/wordlists $WORDLISTS/theharvester
 
 # --- Other utilities ---
+
+# wORDLISTS
 
 # Kali reverse shells
 git clone --depth 1 https://gitlab.com/kalilinux/packages/webshells.git /usr/share/webshells && \
@@ -291,6 +288,7 @@ ln -s /usr/share/nmap/scripts/ $ADDONS/nmap
 
 # Common commands (aliases)
 echo "alias myip='dig +short myip.opendns.com @resolver1.opendns.com'" >> ~/.zshrc
+echo "alias c='clear'"
 
 
 # --- Finished ---
