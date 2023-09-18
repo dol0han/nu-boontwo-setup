@@ -79,7 +79,7 @@ apt-get update && \
 
 # Install languages eg python go, rust etc
 # Install go
-wget https://git.io/go-installer.sh && bash go-installer.sh
+#wget https://git.io/go-installer.sh && sh go-installer.sh
 
 # Install Python common dependencies
 python3 -m pip install --upgrade setuptools wheel paramiko
@@ -150,14 +150,6 @@ git clone --depth 1 https://github.com/offensive-security/exploitdb.git $TOOLS/e
   cd $TOOLS/exploitdb && \
   ln -sf $TOOLS/exploitdb/searchsploit /usr/bin/searchsploit
 
-# interlace
-git clone --depth 1 https://github.com/codingo/Interlace.git $TOOLS/interlace && \
-  cd $TOOLS/interlace && \
-  python3 -m pip install -r requirements.txt && \
-  python3 setup.py install && \
-  chmod a+x Interlace/interlace.py && \
-  ln -sf $TOOLS/interlace/Interlace/interlace.py /usr/local/bin/interlace
-
 # jwttool
 git clone --depth 1 https://github.com/ticarpi/jwt_tool $TOOLS/jwttool && \
   cd $TOOLS/jwttool && \
@@ -208,10 +200,10 @@ git clone --depth 1 https://github.com/sherlock-project/sherlock $TOOLS/sherlock
   ln -sf $TOOLS/sherlock/sherlock/sherlock.py /usr/local/bin/sherlock
 
 # social engineer toolkit
-git clone --depth 1 https://github.com/trustedsec/social-engineer-toolkit $TOOLS/setoolkit && \
-  cd $TOOLS/setoolkit && \
-  python3 -m pip install -r requirements.txt || : && \
-  python3 setup.py || :
+# git clone --depth 1 https://github.com/trustedsec/social-engineer-toolkit $TOOLS/setoolkit && \
+#  cd $TOOLS/setoolkit && \
+#  python3 -m pip install -r requirements.txt || : && \
+#  python3 setup.py || :
 
 # sublist3r
 git clone --depth 1 https://github.com/aboul3la/Sublist3r.git $TOOLS/sublist3r && \
@@ -296,3 +288,4 @@ echo "alias c='clear'"
 # Start up commands
 echo "export PATH=${PATH}" >> ~/.zshrc
 chsh -s $(which zsh)
+echo "now go install goinstall.sh!!"
