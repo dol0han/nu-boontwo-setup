@@ -79,23 +79,18 @@ apt-get update && \
 
 # Install languages eg python go, rust etc
 # Install go
-#wget https://git.io/go-installer.sh && sh go-installer.sh
+wget https://git.io/go-installer.sh && bash go-installer.sh
 
 # Install Python common dependencies
-python3 -m pip install --upgrade setuptools wheel paramiko
+sudo apt update -y
+sudo apt install python3-venv python3-pip -y
+python3 -m pip install --upgrade setuptools wheel paramiko -y
 
-# shell and prompt setup
-# Install configured ZSH
-if command -v curl >/dev/null 2>&1; then
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/romkatv/zsh4humans/v5/install)"
-else
-  sh -c "$(wget -O- https://raw.githubusercontent.com/romkatv/zsh4humans/v5/install)"
-fi
 
 #install fig
 curl -fSsL https://repo.fig.io/scripts/install-headless.sh | bash
 echo "REMEMBER to login to fig: fig login"
-
+sleep 5s
 # --- Tools ---
 
 # breach-parse
@@ -279,13 +274,8 @@ git clone --depth 1 https://gitlab.com/kalilinux/packages/webshells.git /usr/sha
 ln -s /usr/share/nmap/scripts/ $ADDONS/nmap
 
 # Common commands (aliases)
-echo "alias myip='dig +short myip.opendns.com @resolver1.opendns.com'" >> ~/.zshrc
-echo "alias c='clear'"
-
 
 # --- Finished ---
 
 # Start up commands
-echo "export PATH=${PATH}" >> ~/.zshrc
 chsh -s $(which zsh)
-echo "now go install goinstall.sh!!"
